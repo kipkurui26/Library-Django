@@ -1,0 +1,71 @@
+{% extends "master.html" %}
+
+{% load static %}
+
+{% comment %} CSS Block Link {% endcomment %}
+{% block css_link %}
+    {% static "css/addBook.css" %}
+{% endblock css_link %}
+
+{% comment %} Title Block Link {% endcomment %}
+{% block title %}
+    Issue Book | Leagues Library
+{% endblock title %}
+
+{% comment %} Content Block {% endcomment %}
+{% block content %}
+    <section id="container">
+        <section class="content-div">
+            {% for item in book %}
+                {% if request.META.HTTP_REFERER %}
+                    <a href="{{ request.META.HTTP_REFERER }}">Go Back</a>
+                {% endif %}
+                <h1 class="title-header">Issue Book</h1>
+                <form class="form-div" action="#" method="POST">
+                    {% csrf_token %}
+                    <div class='form-element'>
+                        <label for="book-id">Book Id</label>
+                        <input type="text" value="{{item.bookId}}" id="book-id" name="bookId" placeholder="Enter Book Id" required >
+                    </div>
+                    <div class='form-element'>
+                        <label for="book-title">Book Title</label>
+                        <input type="text" id="book-title" name="bookTitle" placeholder="Enter Book Title" required value="{{item.bookTitle}}">
+                    </div>
+                    <div class='form-element'>
+                        <label for="book-condition">Book Condition</label>
+                        <select name="bookCondition" id="bookCondition">
+                            <option value="Select Book Condition">Select Book Condition</option>
+                            <option value="Exellent" {% if item.bookCondition == "Exellent" %} selected {% endif %}>Exellent</option>
+                            <option value="Good" {% if item.bookCondition == "Good" %} selected {% endif %}>Good</option>
+                            <option value="Fair" {% if item.bookCondition == "Fair" %} selected {% endif %}>Fair</option>
+                            <option value="Poor" {% if item.bookCondition == "Poor" %} selected {% endif %}>Poor</option>
+                        </select>
+                    </div>
+                    <div class='form-element'>
+                        <label for="adm-no">Admission No</label>
+                        <input type="text" id="adm-no" name="admissionNo" placeholder="Enter Admission No" required>
+                    </div>
+                    <div class='form-element'>
+                        <label for="student-name">Student Name</label>
+                        <input type="text" id="student-name" name="studentName" placeholder="Enter Student Name" required>
+                    </div>
+                    <div class='form-element'>
+                        <label for="issued-by">Issued By</label>
+                        <input type="text" id="issued-by" name="issuedBy" placeholder="Issued By" required value>
+                    </div>
+                    <div class='form-element'>
+                        <label for="date-issued">Issue Date</label>
+                        <input type="date" id="date-added" name="issueDate"required>
+                    </div>
+                    <div class='form-element'>
+                        <label for="date-returned">Return Date</label>
+                        <input type="date" id="date-returned" name="returnDate"required>
+                    </div>
+                    <div class="button-div">
+                        <button type="submit" class="submit-button">Issue Book</button>
+                    </div>
+                </form>   
+            {% endfor %} 
+        </section>
+    </section>
+{% endblock content %}

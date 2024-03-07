@@ -1,0 +1,52 @@
+{% extends "master.html" %}
+
+{% load static %}
+
+{% comment %} CSS Block Link {% endcomment %}
+{% block css_link %}
+    {% static "css/userLog.css" %}
+{% endblock css_link %}
+
+{% comment %} Title Block Link {% endcomment %}
+{% block title %}
+    User Login | Leagues Library Management System
+{% endblock title %}
+
+{% comment %} Content Block {% endcomment %}
+{% block content %}
+    <section id="login-container">
+        <div class="login-section">
+            
+            <div class="img-section">
+                <img src="{% static 'imgs/banner2.jpg' %}" alt="Banner Image Leagues Library Management">
+            </div>
+            <div class="form-fields">
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class=" {{message.tags}} ">{{message}}</div>
+                    {% endfor %}
+                {% endif %}
+                <h1 class="title-header">
+                    User Login.
+                    <div class='underdiv'></div>
+                </h1>
+                <form action="{% url 'userLogin' %}" id="form" method="post">
+                    {% csrf_token %}
+                    <div class='form-element'>
+                        <label for="username">Username</label>
+                        <input type="text" id="username" name="userName" placeholder="Enter Username" required>
+                    </div>
+                    <div class='form-element'>
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="userPassword" placeholder="Enter Password" required>
+                    </div>
+                    <div class="button-div">
+                        <button type="submit" class="submit-button">Login</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+    {% comment %} <h1>User Login</h1>
+    <a href={% url "dashboard" %}>View Dashboard</a> {% endcomment %}
+{% endblock content %}

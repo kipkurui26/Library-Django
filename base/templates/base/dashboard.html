@@ -1,0 +1,50 @@
+{% extends "master.html" %}
+
+{% load static %}
+
+{% comment %} CSS Block Link {% endcomment %}
+{% block css_link %}
+    {% static "css/addBook.css" %}
+{% endblock css_link %}
+
+{% comment %} Title Block Link {% endcomment %}
+{% block title %}
+    Dashboard | Leagues LMS
+{% endblock title %}
+
+{% comment %} Content Block {% endcomment %}
+{% block content %}
+    <section id="display-container">
+        <section class="side-nav">
+            {% include "side_nav.html" %}
+        </section>
+        <section class="dashboard-display">
+            {% if messages %}
+                    {% for message in messages %}
+                        <div class=" {{message.tags}} ">{{message}}</div>
+                    {% endfor %}
+            {% endif %}
+
+            <div class="title-divs">
+                <h1 class="project-title">Leagues Library Management System</h1>
+            </div>
+            <div class="content-section">
+                <div class="element-div total-books">
+                    <h2 class='element-title'>{{ total_books }}</h2>
+                    <p class='element-desc'>Total Books</p>
+                    <a class='element-link' href={% url "displayBooks" %}>View Books</a>
+                </div>
+                <div class="element-div borrowed-books">
+                    <h2 class='element-title'>{{ borrowed_books }}</h2>
+                    <p class='element-desc'>Issued Books</p>
+                    <a class='element-link' href={% url "borrowedBooks" %}>View Books</a>
+                </div>
+                <div class="element-div lost-books">
+                    <h2 class='element-title'>{{ lost_books }}</h2>
+                    <p class='element-desc'>Lost Books</p>
+                    <a class='element-link' href={% url "lostBooksList" %}>View Books</a>
+                </div>
+            </div>
+        </section>
+    </section>
+{% endblock content %}

@@ -1,0 +1,86 @@
+{% extends "master.html" %}
+
+{% load static %}
+
+{% comment %} CSS Block Link {% endcomment %}
+{% block css_link %}
+    {% static "css/addBook.css" %}
+{% endblock css_link %}
+
+{% comment %} Page Title {% endcomment %}
+{% block title %}
+    Update Book | Leagues Library
+{% endblock title %}
+
+{% comment %} Content Block {% endcomment %}
+{% block content %}
+<section id="container">
+    <section class="content-div">
+        {% if request.META.HTTP_REFERER %}
+            <a href="{{ request.META.HTTP_REFERER }}">Go Back</a>
+        {% endif %}
+        <h1 class="title-header">Register New Book</h1>
+        <form class="form-div" action="#" method="POST">
+            {% csrf_token %}
+            <div class='form-element'>
+                <label for="book-id">Book ID</label>
+                <input type="text" id="book-id" name="bookId" placeholder="Enter Book ID" required value="{{u_book.bookId}}">
+            </div>
+            <div class='form-element'>
+                <label for="book-title">Book Title</label>
+                <input type="text" id="book-title" name="bookTitle" placeholder="Enter Book Title" required value="{{u_book.bookTitle}}">
+            </div>
+            <div class='form-element'>
+                <label for="book-author">Book Author</label>
+                <input type="text" id="book-author" name="bookAuthor" placeholder="Enter Book Author" required value="{{u_book.bookAuthor}}">
+            </div>
+            <div class='form-element'>
+                <label for="book-publisher">Book Publisher</label>
+                <input type="text" id="book-publisher" name="bookPublisher" placeholder="Enter Book Publisher" required value="{{u_book.bookPublisher}}">
+            </div>
+            <div class='form-element'>
+                <label for="book-edition">Book Edition</label>
+                <input type="text" id="book-edition" name="bookEdition" placeholder="Enter Book Edition" required value="{{u_book.bookEdition}}">
+            </div>
+            <div class='form-element'>
+                <label for="book-form">Book Form</label>
+                <select name="bookForm" id="book-form">
+                    <option value="Select Book Form">Select Book Form</option>
+                    <option value="4" {% if u_book.bookForm == "4" %} selected {% endif %}>4</option>
+                    <option value="3" {% if u_book.bookForm == "3" %} selected {% endif %}>3</option>
+                    <option value="2" {% if u_book.bookForm == "2" %} selected {% endif %}>2</option>
+                    <option value="1" {% if u_book.bookForm == "1" %} selected {% endif %}>1</option>
+                </select>
+            </div>
+            <div class='form-element'>
+                <label for="book-subject">Book Subject</label>
+                <input type="text" id="book-subject" name="bookSubject" placeholder="Enter Book Subject" required value="{{u_book.bookSubject}}">
+            </div>
+            <div class='form-element'>
+                <label for="book-condition">Book Condition</label>
+                <select name="bookCondition" id="bookCondition">
+                    <option value="Select Book Condition">Select Book Condition</option>
+                    <option value="Exellent" {% if u_book.bookCondition == "Exellent" %} selected {% endif %}>Exellent</option>
+                    <option value="Good" {% if u_book.bookCondition == "Good" %} selected {% endif %}>Good</option>
+                    <option value="Fair" {% if u_book.bookCondition == "Fair" %} selected {% endif %}>Fair</option>
+                    <option value="Poor" {% if u_book.bookCondition == "Poor" %} selected {% endif %}>Poor</option>
+                </select>
+            </div>
+            <div class='form-element'>
+                <label for="date-added">Date Added</label>
+                <input type="date" id="date-added" name="dateAdded" required value="{{ u_book.dateAdded|date:'Y-m-d' }}">
+            </div>
+            <div class='form-element'>
+                <label for="added-by">Added By</label>
+                <input type="text" id="added-by" name="addedBy" placeholder="Added By" required value="{{u_book.addedBy}}">
+            </div>
+            <div class="button-div">
+                <button type="submit" class="submit-button">Update Book</button>
+                <a type="submit" class='delete-btn' href={% url "deleteBook" u_book.bookId %}>Delete Book</a>
+            </div>
+        </form>
+
+    </section>
+</section>
+
+{% endblock content %}

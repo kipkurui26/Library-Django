@@ -1,0 +1,99 @@
+{% extends "master.html" %}
+
+{% load static %}
+
+{% comment %} CSS Block Link {% endcomment %}
+{% block css_link %}
+    {% static "css/addBook.css" %}
+{% endblock css_link %}
+
+{% comment %} Title Block Link {% endcomment %}
+{% block title %}
+Borrowed Books | Leagues LMS
+{% endblock title %}
+
+{% comment %} Content Block {% endcomment %}
+{% block content %}
+    <section id="display-container">
+        <section class="side-nav">
+            {% include "side_nav.html" %}
+        </section>
+        <section class="content-display">
+            {% if messages %}
+                {% for message in messages %}
+                    <div class=" {{message.tags}} ">{{message}}</div>
+                {% endfor %}
+            {% endif %}
+            <h1 class='title-header'>Borrowed Books</h1>
+            <div class="top-div">
+                <div class="search-divs">
+                    <div id="search">
+                        <form method="post" action="{% url 'searchBooks' %}" class='search-div'>
+                            {% csrf_token %}
+                            <input type="text" name="search" placeholder="Enter Book Name">
+                            <button type="submit" class="search-btn">
+                                Search Book
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="table-container">
+                <div class="table-content">
+                    <table class="table align-middle table-sm table-hover">
+                        <thead>
+                            <tr style="text-align: center;">
+                                <th class='small-100'>Book ID</th>
+                                <th class="big-200">Book Title</th>
+                                <th class='small-100'>Student ID</th>
+                                <th class="big-200">Student Name</th>
+                                <th class='small-100'>Book Condition</th>
+                                <th class='medium-200'>Issued By</th>
+                                <th class='medium-150'>Issue Date</th>
+                                <th class='medium-150'>Return Date</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody class="table-group-divider">
+                            {% if borrowed_books %}
+                                <a href="{% url 'borrowedBooks' %}">Display All Books</a>
+                                {% for book in borrowed_books %}
+                                    <tr>
+                                        <td>{{ book.bookId }}</td>
+                                        <td>{{ book.bookTitle }}</td>
+                                        <td>{{ book.studentId }}</td>
+                                        <td>{{ book.studentName }}</td>
+                                        <td>{{ book.bookCondition }}</td>
+                                        <td>{{ book.issuedBy }}</td>
+                                        <td>{{ book.issueDate }}</td>
+                                        <td>{{ book.returnDate }}</td>
+                                        <td class='btns-div-cta'>
+                                            <a class='issue-btn' href={% url "returnBook" book.bookId %}>Return Book</a>
+                                            <a class='delete-btn' href={% url "lostBooks" book.bookId %}>Mark as Lost</a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            {% else %}
+                                {% for book in borrowed_book %}
+                                    <tr>
+                                        <td>{{ book.bookId }}</td>
+                                        <td>{{ book.bookTitle }}</td>
+                                        <td>{{ book.studentId }}</td>
+                                        <td>{{ book.studentName }}</td>
+                                        <td>{{ book.bookCondition }}</td>
+                                        <td>{{ book.issuedBy }}</td>
+                                        <td>{{ book.issueDate }}</td>
+                                        <td>{{ book.returnDate }}</td>
+                                        <td class='btns-div-cta'>
+                                            <a class='issue-btn' href={% url "returnBook" book.bookId %}>Return Book</a>
+                                            <a class='delete-btn' href={% url "lostBooks" book.bookId %}>Mark as Lost</a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+        </section>
+    </section>
+{% endblock content %}

@@ -1,0 +1,16 @@
+<div class="nav-links">
+    <ul class='list-items'>
+        <li class='list-item {% if request.path == "/dashboard/" %}active{% endif %}'>
+            <a href={% url "dashboard" %}>Dashboard</a>
+        </li>
+        <li class='list-item {% if request.path == "/display-books/" %}active{% endif %}'>
+            <a href={% url "displayBooks" %}>Display Books</a>
+        </li>
+        <li class='list-item {% if request.path == "/borrowed-books/" %}active{% endif %}'>
+            <a href={% url "borrowedBooks" %}>Borrowed Books</a>
+        </li>
+        <li class='list-item {% if request.path == "/lost-books-list/" %}active{% endif %}'>
+            <a href={% url "lostBooksList" %}>Lost Books</a> 
+        </li>
+    </ul>
+</div>

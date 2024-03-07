@@ -1,0 +1,57 @@
+{% extends "master.html" %}
+
+{% load static %}
+
+{% comment %} CSS Block Link {% endcomment %}
+{% block css_link %}
+    {% static "css/addBook.css" %}
+{% endblock css_link %}
+
+{% comment %} Title Block Link {% endcomment %}
+{% block title %}
+Borrowed Books | Leagues LMS
+{% endblock title %}
+
+{% comment %} Content Block {% endcomment %}
+{% block content %}
+<section id="container">
+    <section class="content-div">
+        {% if request.META.HTTP_REFERER %}
+            <a href="{{ request.META.HTTP_REFERER }}">Go Back</a>
+        {% endif %}
+        <h1 class="title-header">File a Lost Book</h1>
+        {% for book in lostBook %}
+            <form class='form-div' action="" method='POST'>
+                {% csrf_token %}
+                <div class='form-element'>
+                    <label for="adm-no">Admission No</label>
+                    <input type="text" id="adm-no" name="admissionNo" placeholder="Enter Admission No" required value="{{book.studentId}}"> 
+                </div>
+                <div class='form-element'>
+                    <label for="student-name">Student Name</label>
+                    <input type="text" id="student-name" name="studentName" placeholder="Enter Student Name" required value="{{book.studentName}}">
+                </div>
+                <div class='form-element'>
+                    <label for="book-id">Book Id</label>
+                    <input type="text" value="{{book.bookId}}" id="book-id" name="bookId" placeholder="Enter Book Id" required >
+                </div>
+                <div class='form-element'>
+                    <label for="book-title">Book Title</label>
+                    <input type="text" id="book-title" name="bookTitle" placeholder="Enter Book Title" required value="{{book.bookTitle}}">
+                </div>
+                <div class='form-element'>
+                    <label for="book-fine">Fine on Book</label>
+                    <input type="text" value="{{book.bookFine}}" id="book-fine" name="bookFine" placeholder="Fine on Book" required >
+                </div>
+                <div class='form-element'>
+                    <label for="filled-by">Filed By</label>
+                    <input type="text" id="filled-by" name="filledBy" placeholder="Filed By" required value="{{book.filledBy}}">
+                </div>
+                <div class="button-div">
+                    <button type="submit" class="submit-button">File Lost Book</button>
+                </div>
+            </form>
+        {% endfor %}
+    </section>
+</section>
+{% endblock content %}
